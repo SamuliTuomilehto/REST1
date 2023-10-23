@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('[name="hakuPainike"]').click(function () {
+          alert("Sanaa haettu");
+          // muuttujaan sana tallennetaan #haku -input kentän sisältö
+          var sana = $("#haku").val();
+          //Ajax kutsu, urliin lisätään parametriksi sana. Onnistuessaan kutsu lisää <p> kenttään tuloksen.
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/sanakirja/" + sana,
+            dataType: "json",
+            data: JSON.stringify(sana),
+            contentType: "application/json",
+            success: function (data) {
+              $("p").text(data);
+            },
+          })
+            .done((data) => {
+              console.log({ data });
+            })
+            .fail((err) => {
+              console.error(err);
+            })
+            .always(() => {
+              console.log("always called");
+            });
+        });
+        e.preventDefault();
+      });
+    </script>
+  </head>
+  <link rel="stylesheet" href="styles.css" />
+  <body>
+    <div class="topnav">
+      <a href="index.html">Lisäys</a>
+      <a class="active" href="haku.html">Haku</a>
+    </div>
+    <form id="form2" name="form2">
+      <th>Hae sanaa:</th>
+      <td>
+        <input
+          name="haku"
+          id="haku"
+          type="text"
+          value=""
+          maxlength="35"
+          size="35"
+        />
+      </td>
+
+      <td><input name="hakuPainike" type="button" value="Hae" /><br /></td>
+      <br />
+      <br />
+      <th2>Hakutulos:</th2>
+      <td>
+        <p></p>
+      </td>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('[name="Submit"]').click(function () {
+          alert("Sanapari lisätty");
+
+          const data = {
+            fin: $("#fi").val(),
+            eng: $("#en").val(),
+          };
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/sanakirja",
+            dataType: "json",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+          })
+            .done((data) => {
+              console.log({ data });
+            })
+            .fail((err) => {
+              console.error(err);
+            })
+            .always(() => {
+              console.log("always called");
+            });
+        });
+        e.preventDefault();
+      });
+    </script>
+  </head>
+  <link rel="stylesheet" href="styles.css" />
+  <body>
+    <div class="topnav">
+      <a class="active" href="index.html">Lisäys</a>
+      <a href="haku.html">Haku</a>
+    </div>
+    <form id="form" name="form">
+      <th>Sanapari (Suomi / Englanti)</th>
+      <td>
+        <input
+          name="fi"
+          id="fi"
+          type="text"
+          value=""
+          maxlength="35"
+          size="35"
+        />
+      </td>
+      <td>
+        <input
+          name="en"
+          id="en"
+          type="text"
+          value=""
+          maxlength="35"
+          size="35"
+        />
+      </td>
+
+      <td>
+        <input name="Submit" type="button" value="Tallenna" />
+      </td>
+    </form>
+  </body>
+</html>
